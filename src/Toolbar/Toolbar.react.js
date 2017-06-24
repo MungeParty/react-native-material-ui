@@ -422,8 +422,8 @@ class Toolbar extends PureComponent {
             <Animated.View
                 onLayout={this.onLayout}
                 style={[
-                    styles.container,
                     { transform: [{ translateY: this.state.positionValue }] },
+                    styles.container,
                 ]}
             >
                 {this.renderAnimatedBackgrounds(styles)}
