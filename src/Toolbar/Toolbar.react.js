@@ -1,5 +1,5 @@
 /* eslint-disable import/no-unresolved, import/extensions */
-import React, { PureComponent, PropTypes } from 'react';
+import React, { PureComponent } from 'react';
 import {
     Animated,
     Easing,
@@ -7,14 +7,13 @@ import {
     BackAndroid as DeprecatedBackAndroid,
     BackHandler,
     StyleSheet,
-    Text,
     View,
 } from 'react-native';
+import { PropTypes } from 'prop-types';
 /* eslint-enable import/no-unresolved, import/extensions */
 import LeftElement from './LeftElement.react';
 import CenterElement from './CenterElement.react';
 import RightElement from './RightElement.react';
-import IconToggle from '../IconToggle';
 import isFunction from '../utils/isFunction';
 
 const BackAndroid = BackHandler || DeprecatedBackAndroid;
@@ -65,13 +64,13 @@ const propTypes = {
     * You can overide any style for the component via this prop
     */
     style: PropTypes.shape({
-        container: View.propTypes.style,
-        leftElementContainer: View.propTypes.style,
-        leftElement: IconToggle.propTypes.style,
-        centerElementContainer: View.propTypes.style,
-        titleText: Text.propTypes.style,
-        rightElementContainer: View.propTypes.style,
-        rightElement: IconToggle.propTypes.style,
+        container: PropTypes.any,
+        leftElementContainer: PropTypes.any,
+        leftElement: PropTypes.any,
+        centerElementContainer: PropTypes.any,
+        titleText: PropTypes.any,
+        rightElementContainer: PropTypes.any,
+        rightElement: PropTypes.any,
     }),
     /**
     * This size is used for each icon on the toolbar
