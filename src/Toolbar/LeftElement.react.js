@@ -1,7 +1,7 @@
 /* eslint-disable import/no-unresolved, import/extensions */
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import { Animated, Easing, Platform, StyleSheet } from 'react-native';
-import { PropTypes } from 'prop-types';
 /* eslint-enable import/no-unresolved, import/extensions */
 
 import IconToggle from '../IconToggle';
@@ -16,7 +16,12 @@ const propTypes = {
     onSearchClose: PropTypes.func,
 };
 const defaultProps = {
+    leftElement: null,
+    onLeftElementPress: null,
+    onSearchClose: null,
+    searchable: null,
     style: {},
+    size: 24,
 };
 const contextTypes = {
     uiTheme: PropTypes.object.isRequired,

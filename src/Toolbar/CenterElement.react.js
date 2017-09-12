@@ -1,7 +1,7 @@
 /* eslint-disable import/no-unresolved, import/extensions */
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import { Animated, TouchableWithoutFeedback, Text, TextInput, Easing, Platform } from 'react-native';
-import { PropTypes } from 'prop-types';
 /* eslint-enable import/no-unresolved, import/extensions */
 
 const propTypes = {
@@ -14,6 +14,9 @@ const propTypes = {
     onSearchTextChange: PropTypes.func.isRequired,
 };
 const defaultProps = {
+    onPress: null,
+    centerElement: null,
+    searchable: null,
     style: {},
 };
 const contextTypes = {
@@ -103,7 +106,7 @@ class CenterElement extends PureComponent {
         //    object again to this instance, search text and isSearchActive will be still set
         let content = null;
 
-        if (isSearchActive) {
+        if (searchable && isSearchActive) {
             content = (
                 <TextInput
                     ref={(ref) => { this.searchFieldRef = ref; }}

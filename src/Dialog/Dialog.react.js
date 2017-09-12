@@ -1,6 +1,7 @@
 /* eslint-disable import/no-unresolved, import/extensions */
 import { View } from 'react-native';
-import React, { PureComponent, PropTypes } from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 /* eslint-enable import/no-unresolved, import/extensions */
 import RippleFeedback from '../RippleFeedback';
 
@@ -9,19 +10,12 @@ import Content from './Content.react';
 import Actions from './Actions.react';
 
 const propTypes = {
-    theme: PropTypes.string,
-    overrides: PropTypes.shape({
-        backgroundColor: PropTypes.string,
-        rippleColor: PropTypes.string,
-    }),
-    elevation: PropTypes.number,
-    fullWidth: PropTypes.bool,
-    disabled: PropTypes.bool,
     onPress: PropTypes.func,
     children: PropTypes.node.isRequired,
     style: PropTypes.object,
 };
 const defaultProps = {
+    onPress: null,
     style: {},
 };
 const contextTypes = {
@@ -53,7 +47,6 @@ class Dialog extends PureComponent {
             </RippleFeedback>
         );
     }
-
 }
 
 Dialog.propTypes = propTypes;

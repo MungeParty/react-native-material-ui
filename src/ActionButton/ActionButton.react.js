@@ -7,14 +7,16 @@ import {
     StyleSheet,
     TouchableWithoutFeedback,
     Animated,
-    ViewPropTypes,
 } from 'react-native';
 import { PropTypes } from 'prop-types';
+import { ViewPropTypes } from '../utils';
 /* eslint-enable import/no-unresolved, import/extensions */
 import Icon from '../Icon';
 import IconToggle from '../IconToggle';
 import RippleFeedback from '../RippleFeedback';
+/* eslint-disable import/no-unresolved, import/extensions */
 import getPlatformElevation from '../styles/getPlatformElevation';
+/* eslint-enable import/no-unresolved, import/extensions */
 
 const propTypes = {
     /**
@@ -63,6 +65,10 @@ const propTypes = {
     }),
 };
 const defaultProps = {
+    actions: null,
+    onPress: null,
+    onLongPress: null,
+    transition: null,
     icon: 'add',
     style: {},
     hidden: false,

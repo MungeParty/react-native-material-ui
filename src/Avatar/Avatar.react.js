@@ -1,7 +1,8 @@
 /* eslint-disable import/no-unresolved, import/extensions */
 import React, { PureComponent } from 'react';
-import { View, Image, Text, StyleSheet, ViewPropTypes } from 'react-native';
-import { PropTypes } from 'prop-types';
+import PropTypes from 'prop-types';
+import { View, Image, Text, StyleSheet } from 'react-native';
+import { ViewPropTypes } from '../utils';
 /* eslint-enable import/no-unresolved, import/extensions */
 import Icon from '../Icon';
 
@@ -39,6 +40,12 @@ const propTypes = {
     }),
 };
 const defaultProps = {
+    image: null,
+    icon: null,
+    iconColor: null,
+    iconSize: null,
+    text: null,
+    size: 48,
     style: {},
 };
 const contextTypes = {

@@ -1,7 +1,7 @@
 /* eslint-disable import/no-unresolved, import/extensions */
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import { View, StyleSheet, NativeModules, findNodeHandle } from 'react-native';
-import { PropTypes } from 'prop-types';
 /* eslint-enable import/no-unresolved, import/extensions */
 
 import IconToggle from '../IconToggle';
@@ -21,7 +21,11 @@ const propTypes = {
     onSearchPress: PropTypes.func.isRequired,
 };
 const defaultProps = {
+    rightElement: null,
+    onRightElementPress: null,
+    size: null,
     style: {},
+    searchable: null,
 };
 const contextTypes = {
     uiTheme: PropTypes.object.isRequired,
@@ -110,7 +114,7 @@ class RightElement extends PureComponent {
 
                 return (
                     <IconToggle
-                        key={index}
+                        key={action}
                         name={action}
                         color={flattenRightElement.color}
                         size={size}

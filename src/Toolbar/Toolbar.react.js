@@ -1,22 +1,21 @@
 /* eslint-disable import/no-unresolved, import/extensions */
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import {
     Animated,
     Easing,
     Platform,
-    BackAndroid as DeprecatedBackAndroid,
-    BackHandler,
     StyleSheet,
+    Text,
     View,
 } from 'react-native';
-import { PropTypes } from 'prop-types';
+import { ViewPropTypes, BackAndroid } from '../utils';
 /* eslint-enable import/no-unresolved, import/extensions */
 import LeftElement from './LeftElement.react';
 import CenterElement from './CenterElement.react';
 import RightElement from './RightElement.react';
+import IconToggle from '../IconToggle';
 import isFunction from '../utils/isFunction';
-
-const BackAndroid = BackHandler || DeprecatedBackAndroid;
 
 const propTypes = {
     /**
@@ -64,12 +63,12 @@ const propTypes = {
     * You can overide any style for the component via this prop
     */
     style: PropTypes.shape({
-        container: PropTypes.any,
-        leftElementContainer: PropTypes.any,
+        container: View.propTypes.style,
+        leftElementContainer: View.propTypes.style,
         leftElement: PropTypes.any,
-        centerElementContainer: PropTypes.any,
+        centerElementContainer: View.propTypes.style,
         titleText: PropTypes.any,
-        rightElementContainer: PropTypes.any,
+        rightElementContainer: View.propTypes.style,
         rightElement: PropTypes.any,
     }),
     /**
@@ -144,6 +143,15 @@ const defaultProps = {
     elevation: 4, // TODO: probably useless, elevation is defined in getTheme function
     style: {},
     hidden: false,
+    isSearchActive: false,
+    onRightElementPress: null,
+    rightElement: null,
+    searchable: null,
+    onPress: null,
+    centerElement: null,
+    leftElement: null,
+    onLeftElementPress: null,
+    size: 24,
 };
 const contextTypes = {
     uiTheme: PropTypes.object.isRequired,
@@ -178,9 +186,9 @@ class Toolbar extends PureComponent {
 
         const isSearchActive = props.isSearchActive || false;
         this.backButtonListener = getBackButtonListener(
-                                        this.onSearchCloseRequested,
-                                        isSearchActive,
-                                    );
+            this.onSearchCloseRequested,
+            isSearchActive,
+        );
 
         this.state = {
             // indicates if searc is activated
@@ -199,6 +207,12 @@ class Toolbar extends PureComponent {
         };
     }
     componentWillReceiveProps(nextProps) {
+        // if search is active and we clicked on the results which does not allow search
+        // then close the previous search.
+        if (this.state.isSearchActive && !nextProps.searchable) {
+            this.onSearchCloseRequested();
+        }
+
         // there should be also posibility to change search through props, so we need to check
         // props first and then we should check state if we need to change search state
         if (this.props.isSearchActive !== nextProps.isSearchActive) {
@@ -450,7 +464,6 @@ class Toolbar extends PureComponent {
             </Animated.View>
         );
     }
-
 }
 
 Toolbar.propTypes = propTypes;

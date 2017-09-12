@@ -1,8 +1,8 @@
 /* eslint-disable import/no-unresolved, import/extensions */
 import React, { PureComponent } from 'react';
-import { View, Text, Animated, Easing, Platform, StyleSheet, ViewPropTypes } from 'react-native';
-import { PropTypes } from 'prop-types';
-/* eslint-enable import/no-unresolved, import/extensions */
+import PropTypes from 'prop-types';
+import { Text, Animated, Easing, Platform, StyleSheet } from 'react-native';
+import { ViewPropTypes } from '../utils';
 
 import Button from '../Button';
 
@@ -51,6 +51,8 @@ const propTypes = {
     }),
 };
 const defaultProps = {
+    onActionPress: null,
+    actionText: null,
     visible: false,
     timeout: 2750,
     bottomNavigation: false,
@@ -158,7 +160,7 @@ class Snackbar extends PureComponent {
         const toValue = bottomNavigation ? -56 : 0;
         const duration = bottomNavigation ? 225 : 195;
         const easing = bottomNavigation ?
-          Easing.bezier(0.0, 0.0, 0.2, 1) : Easing.bezier(0.4, 0.0, 0.6, 1);
+            Easing.bezier(0.0, 0.0, 0.2, 1) : Easing.bezier(0.4, 0.0, 0.6, 1);
 
         Animated.timing(moveAnimated, {
             toValue,

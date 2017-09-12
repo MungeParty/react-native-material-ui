@@ -1,7 +1,8 @@
 /* eslint-disable import/no-unresolved, import/extensions */
 import React, { PureComponent } from 'react';
-import { StyleSheet, View, Text, ViewPropTypes } from 'react-native';
-import { PropTypes } from 'prop-types';
+import PropTypes from 'prop-types';
+import { StyleSheet, View, Text } from 'react-native';
+import { ViewPropTypes } from '../utils';
 /* eslint-enable import/no-unresolved, import/extensions */
 
 import RippleFeedback from '../RippleFeedback';
@@ -39,6 +40,8 @@ const propTypes = {
     }),
 };
 const defaultProps = {
+    label: null,
+    onPress: null,
     active: false,
     disabled: false,
     style: {},

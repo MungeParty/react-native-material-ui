@@ -1,6 +1,7 @@
 /* eslint-disable import/no-unresolved, import/extensions */
 import { StyleSheet, Text, View } from 'react-native';
-import React, { PureComponent, PropTypes } from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 /* eslint-enable import/no-unresolved, import/extensions */
 import IconToggle from '../IconToggle';
 import RippleFeedback from '../RippleFeedback';
@@ -9,7 +10,7 @@ const propTypes = {
     /**
     * Text will be shown after Icon
     */
-    label: PropTypes.string,
+    label: PropTypes.string.isRequired,
     /**
     * Value will be returned when onCheck is fired
     */
@@ -33,9 +34,10 @@ const propTypes = {
     /**
     * Event that is called when state is changed
     */
-    onCheck: PropTypes.func,
+    onCheck: PropTypes.func.isRequired,
 };
 const defaultProps = {
+    checked: false,
     checkedIcon: 'check-box',
     uncheckedIcon: 'check-box-outline-blank',
     disabled: false,

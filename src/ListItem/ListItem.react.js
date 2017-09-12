@@ -1,5 +1,6 @@
 /* eslint-disable import/no-unresolved, import/extensions */
-import React, { PureComponent, PropTypes } from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import {
     StyleSheet,
     View,
@@ -24,7 +25,7 @@ const propTypes = {
     divider: PropTypes.bool,
     onPress: PropTypes.func,
     onPressValue: PropTypes.any,
-    numberOfLines: React.PropTypes.oneOf([1, 2, 3, 'dynamic']),
+    numberOfLines: PropTypes.oneOf([1, 2, 3, 'dynamic']),
     style: PropTypes.object,
 
     // left side
@@ -53,6 +54,15 @@ const propTypes = {
     onRightElementPress: PropTypes.func,
 };
 const defaultProps = {
+    dense: false,
+    onPress: null,
+    onPressValue: null,
+    divider: false,
+    leftElement: null,
+    onLeftElementPress: null,
+    centerElement: null,
+    rightElement: null,
+    onRightElementPress: null,
     numberOfLines: 1,
     style: {},
 };
@@ -345,14 +355,15 @@ class ListItem extends PureComponent {
         const flattenRightElement = StyleSheet.flatten(styles.rightElement);
 
         if (elements) {
-            content = elements.map((action, i) => (
+            content = elements.map(action => (
                 <IconToggle
-                    key={`${action}${i}`}
+                    key={action}
                     color={flattenRightElement.color}
+                    name={action}
+                    size={24}
+                    style={styles.rightElement}
                     onPress={() => this.onRightElementPressed({ action })}
-                >
-                    <Icon name={action} size={24} style={styles.rightElement} />
-                </IconToggle>
+                />
             ));
         }
 
@@ -363,7 +374,7 @@ class ListItem extends PureComponent {
         if (rightElement && rightElement.menu) {
             // We need this view as an anchor for drop down menu. findNodeHandle can
             // find just view with width and height, even it needs backgroundColor :/
-            content.push(
+            content.push((
                 <View key="menuIcon">
                     <View
                         ref={(c) => { this.menu = c; }}
@@ -380,7 +391,7 @@ class ListItem extends PureComponent {
                         style={flattenRightElement}
                     />
                 </View>
-            );
+            ));
         }
 
         return (

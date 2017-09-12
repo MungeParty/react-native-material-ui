@@ -1,7 +1,8 @@
 /* eslint-disable import/no-unresolved, import/extensions */
 import React, { PureComponent } from 'react';
-import { Platform, Animated, Easing, StyleSheet, ViewPropTypes } from 'react-native';
-import { PropTypes } from 'prop-types';
+import PropTypes from 'prop-types';
+import { Platform, Animated, Easing, StyleSheet } from 'react-native';
+import { ViewPropTypes } from '../utils';
 /* eslint-enable import/no-unresolved, import/extensions */
 
 import BottomNavigationAction from './BottomNavigationAction.react';
@@ -27,6 +28,7 @@ const propTypes = {
     }),
 };
 const defaultProps = {
+    active: null,
     hidden: false,
     style: {},
 };
