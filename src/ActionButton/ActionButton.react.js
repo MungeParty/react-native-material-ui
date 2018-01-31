@@ -57,6 +57,10 @@ const propTypes = {
     */
     transition: PropTypes.oneOf(['toolbar', 'speedDial']),
     /**
+    * Set ripple color
+    */
+    rippleColor: PropTypes.string,
+    /**
     * You can overide any style for this button
     */
     style: PropTypes.shape({
@@ -72,6 +76,7 @@ const defaultProps = {
     icon: 'add',
     style: {},
     hidden: false,
+    rippleColor: '#AAF',
 };
 const contextTypes = {
     uiTheme: PropTypes.object.isRequired,
@@ -167,17 +172,19 @@ function getStyles(props, context, state) {
     };
 }
 
+const getRippleContainerStyle = (containerStyle) => {
+    const flattenContainer = StyleSheet.flatten(containerStyle);
+    const { height, width, borderRadius } = flattenContainer;
+
+    return { container: { height, width, borderRadius } };
+};
+
+
 class ActionButton extends PureComponent {
     constructor(props) {
         super(props);
 
-        const scaleValue = props.hidden ? 0.01 : 1;
-
-        this.state = {
-            render: 'button',
-            elevation: 2,
-            scaleValue: new Animated.Value(scaleValue),
-        };
+        this.state = { render: 'button' };
     }
     componentWillReceiveProps(nextProps) {
         if (nextProps.hidden !== this.props.hidden) {
@@ -207,7 +214,7 @@ class ActionButton extends PureComponent {
         if (name) {
             key = name;
         } else if (React.isValidElement(icon) && icon.key) {
-            key = icon.key;
+            key = icon.key; // eslint-disable-line
         }
         return key;
     }
@@ -227,7 +234,7 @@ class ActionButton extends PureComponent {
         //     toValue: 1,
         //     duration: 225,
         //     easing: Easing.bezier(0.0, 0.0, 0.2, 1),
-        //     useNativeDriver: Platform.OS === 'android',
+        //     useNativeDriver: true,
         // }).start();
     }
     hide = () => {
@@ -237,7 +244,7 @@ class ActionButton extends PureComponent {
         //     toValue: 0.01,
         //     duration: 195,
         //     easing: Easing.bezier(0.4, 0.0, 0.6, 1),
-        //     useNativeDriver: Platform.OS === 'android',
+        //     useNativeDriver: true,
         // }).start();
     }
     renderToolbarTransition = (styles) => {
@@ -253,8 +260,10 @@ class ActionButton extends PureComponent {
                         if (React.isValidElement(action)) {
                             return this.renderToolbarElementAction(styles, action);
                         }
-                        return this.renderToolbarLabelAction(
-                            styles, action.icon, action.label, action.name);
+
+                        const { icon, label, name } = action;
+                        // TODO: pass action
+                        return this.renderToolbarLabelAction(styles, icon, label, name);
                     })}
                 </View>
             </View>
@@ -278,8 +287,9 @@ class ActionButton extends PureComponent {
                                         return this.renderElementAction(styles, action);
                                     }
 
-                                    return this.renderLabelAction(
-                                        styles, action.icon, action.label, action.name);
+                                    const { icon, label, name } = action;
+                                    // TODO: pass action
+                                    return this.renderLabelAction(styles, icon, label, name);
                                 })}
                             </View>
                             {this.renderMainButton(styles)}
@@ -298,11 +308,10 @@ class ActionButton extends PureComponent {
         return (
             <View key="main-button" style={styles.container}>
                 <RippleFeedback
-                    color="#AAF"
+                    style={getRippleContainerStyle(styles.container)}
+                    color={this.props.rippleColor}
                     onPress={() => this.onPress('main-button')}
                     onLongPress={onLongPress}
-                    onPressIn={() => this.setState({ elevation: 4 })}
-                    onPressOut={() => this.setState({ elevation: 2 })}
                     delayPressIn={20}
                 >
                     {this.renderIconButton(styles, mainIcon)}
@@ -317,7 +326,7 @@ class ActionButton extends PureComponent {
         if (React.isValidElement(icon)) {
             content = (
                 <RippleFeedback
-                    color="#AAF"
+                    color={this.props.rippleColor}
                     onPress={() => this.onPress(key)}
                     delayPressIn={20}
                 >
@@ -363,7 +372,8 @@ class ActionButton extends PureComponent {
             <View key={key} style={styles.speedDialActionIconContainer}>
                 <View style={styles.speedDialActionIcon}>
                     <RippleFeedback
-                        color="#AAF"
+                        style={getRippleContainerStyle(styles.speedDialActionIcon)}
+                        color={this.props.rippleColor}
                         onPress={() => this.onPress(key)}
                         delayPressIn={20}
                     >
@@ -400,7 +410,7 @@ class ActionButton extends PureComponent {
             result = <Icon name={icon} style={styles.icon} />;
         }
         return (
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }} pointerEvents="box-only">
                 {result}
             </View>
         );
