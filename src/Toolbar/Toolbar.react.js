@@ -5,7 +5,6 @@ import {
     Animated,
     Easing,
     StyleSheet,
-    Text,
     View,
 } from 'react-native';
 import { ViewPropTypes, BackAndroid } from '../utils';
@@ -13,7 +12,6 @@ import { ViewPropTypes, BackAndroid } from '../utils';
 import LeftElement from './LeftElement.react';
 import CenterElement from './CenterElement.react';
 import RightElement from './RightElement.react';
-import IconToggle from '../IconToggle';
 import isFunction from '../utils/isFunction';
 
 const propTypes = {
@@ -62,12 +60,12 @@ const propTypes = {
     * You can overide any style for the component via this prop
     */
     style: PropTypes.shape({
-        container: View.propTypes.style,
-        leftElementContainer: View.propTypes.style,
+        container: ViewPropTypes.style,
+        leftElementContainer: ViewPropTypes.style,
         leftElement: PropTypes.any,
-        centerElementContainer: View.propTypes.style,
+        centerElementContainer: ViewPropTypes.style,
         titleText: PropTypes.any,
-        rightElementContainer: View.propTypes.style,
+        rightElementContainer: ViewPropTypes.style,
         rightElement: PropTypes.any,
     }),
     /**
@@ -265,6 +263,11 @@ class Toolbar extends PureComponent {
     * Android's HW/SW back button
     */
     onSearchCloseRequested = () => {
+        const { searchable } = this.props;
+        const { searchScaleValue } = this.state;
+        if (searchable.onSearchCloseRequested) {
+            searchable.onSearchCloseRequested();
+        }
         this.setState({
             isSearchActive: false,
             searchValue: '',
@@ -272,7 +275,7 @@ class Toolbar extends PureComponent {
 
         this.animateDefaultBackground(() => {
             // default scale set up back to "hidden" value
-            this.state.searchScaleValue.setValue(0.01);
+            searchScaleValue.setValue(0.01);
             this.setState({ order: 'defaultFirst' });
 
             this.onSearchClosed();
