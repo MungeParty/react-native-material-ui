@@ -15,6 +15,7 @@ const propTypes = {
         onChangeText: PropTypes.func,
         onSubmitEditing: PropTypes.func,
         placeholder: PropTypes.string,
+        placeholderTextColor: PropTypes.string,
     }),
     style: PropTypes.shape({
         centerElementContainer: ViewPropTypes.style,
@@ -129,6 +130,7 @@ class CenterElement extends PureComponent {
                     onChangeText={onSearchTextChange}
                     onSubmitEditing={searchable.onSubmitEditing}
                     placeholder={searchable.placeholder}
+                    placeholderTextColor={searchable.placeholderTextColor}
                     style={[styles.titleText, { marginLeft: 0 }]}
                     underlineColorAndroid="transparent"
                     value={searchValue}
