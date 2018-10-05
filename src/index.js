@@ -4,6 +4,7 @@ export { COLOR };
 export { default as getTheme } from './styles/getTheme';
 export { default as withTheme } from './styles/withTheme';
 export { default as ThemeContext } from './styles/themeContext';
+export { default as ThemeProvider } from './styles/ThemeProvider.react';
 export { default as getPlatformElevation } from './styles/getPlatformElevation';
 export { default as RippleFeedback } from './RippleFeedback';
 // components
